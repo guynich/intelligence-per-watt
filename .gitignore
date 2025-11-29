@@ -93,3 +93,5 @@ Desktop.ini
 .pytest_cache/
 
 runs/
+
+intelligence-per-watt/src/ipw/telemetry/bin/linux-x86_64/energy-monitor
