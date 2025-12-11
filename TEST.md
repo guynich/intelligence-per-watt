@@ -21,6 +21,12 @@ git rm -r --cached intelligence-per-watt/src/ipw/telemetry/bin/linux-x86_64/ener
 
 4. Get an API key from OpenAI and add it to `.env` file in the repo directory.  My first profiling run cost 1.12USD, so check you have a few dollars balance.
 
+https://platform.openai.com/docs/overview
+
+```console
+OPENAI_API_KEY=<your key>
+```
+
 ## Installation
 
 1. Clone the repo, or your fork.
@@ -55,10 +61,18 @@ uv pip install -e 'intelligence-per-watt[ollama]'
 
 ## Run
 
-To run with the dataset and OpenAI key.
+### llama3.2:1b
+To run with the `ipw` dataset.
 ```bash
 ipw profile --client ollama --model llama3.2:1b --dataset ipw
 ```
+
+### qwen3:4b
+To run with the `ipw` dataset.
+```bash
+ipw profile --client ollama --model qwen3:4b --dataset ipw
+```
+Billing had $7.42 on 12/11/2025.
 
 ## Analyze
 
