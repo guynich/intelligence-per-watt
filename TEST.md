@@ -61,18 +61,41 @@ uv pip install -e 'intelligence-per-watt[ollama]'
 
 ## Run
 
+This is a fork.  Check if pull is needed from
+[source repo](https://github.com/HazyResearch/intelligence-per-watt).
+
 ### llama3.2:1b
-To run with the `ipw` dataset.
+Run with the `ipw` dataset.
 ```bash
 ipw profile --client ollama --model llama3.2:1b --dataset ipw
 ```
 
-### qwen3:4b
-To run with the `ipw` dataset.
+### gemma3:1b
+Run with the `ipw` dataset.
+```bash
+ipw profile --client ollama --model gemma3:1b --dataset ipw
+```
+
+### TODO: qwen3:4b
+Run with the `ipw` dataset.
+
+> Run crashed without user input.
+
+> Run without reasoning?
+
 ```bash
 ipw profile --client ollama --model qwen3:4b --dataset ipw
 ```
-Billing had $7.42 on 12/11/2025.
+
+## Results
+
+Test runs on NVidia RTX-A2000 (Ampere).
+
+| Model       | Profiling (hms) | Scoring (hms) | API cost ($) | Accuracy | IPW   |
+|-------------|-----------------|---------------|--------------|----------|-------|
+| llama3.2:1b | 01:25:23        | 01:08:30      | 1.12         | 0.397    | 0.011 |
+| gemma3:1b   | 02:06:57        | 01:04:22      | 1.21         | 0.518    | 0.012 |
+
 
 ## Analyze
 
