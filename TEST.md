@@ -1,6 +1,19 @@
-TODO(guynich): delete if pushing to HazyResearch
+TODO(guynich): delete this file if push request something else for HazyResearch.
 
-Ubuntu 24.04
+Test runs on Ubuntu 24.04.
+
+- [Pre-requisites](#pre-requisites)
+- [Installation](#installation)
+- [Run](#run)
+  - [llama3.2:1b](#llama321b)
+  - [gemma3:1b](#gemma31b)
+  - [gemma3:4b](#gemma34b)
+  - [TODO: qwen3:4b](#todo-qwen34b)
+- [Analyze](#analyze)
+- [Backup](#backup)
+- [Results](#results)
+- [Next steps](#next-steps)
+
 
 ## Pre-requisites
 
@@ -34,6 +47,10 @@ OPENAI_API_KEY=<your key>
 cd
 git clone https://github.com/HazyResearch/intelligence-per-watt.git
 ```
+Follow
+[installation pre-requisites](https://github.com/HazyResearch/intelligence-per-watt#prerequisites)
+including uv, Rust, Protocol Buffer compiler.  I chose Ollama for inference
+engine.
 
 2. Create and activate virtual environment
 ```bash
@@ -61,8 +78,16 @@ uv pip install -e 'intelligence-per-watt[ollama]'
 
 ## Run
 
-This is a fork.  Check if pull is needed from
+This is a fork.  Check if a sync is needed with
 [source repo](https://github.com/HazyResearch/intelligence-per-watt).
+
+e.g.: in a branch.
+```bash
+git remote -v
+git remote add upstream git@github.com:HazyResearch/intelligence-per-watt.git
+git fetch upstream
+git merge upstream/main
+```
 
 ### llama3.2:1b
 Run with the `ipw` dataset.
@@ -73,7 +98,17 @@ ipw profile --client ollama --model llama3.2:1b --dataset ipw
 ### gemma3:1b
 Run with the `ipw` dataset.
 ```bash
+ollama pull gemma3:1b
+
 ipw profile --client ollama --model gemma3:1b --dataset ipw
+```
+
+### gemma3:4b
+Run with the `ipw` dataset.
+```bash
+ollama pull gemma3:4b
+
+ipw profile --client ollama --model gemma3:4b --dataset ipw
 ```
 
 ### TODO: qwen3:4b
@@ -87,17 +122,9 @@ Run with the `ipw` dataset.
 ipw profile --client ollama --model qwen3:4b --dataset ipw
 ```
 
-## Results
-
-Test runs on NVidia RTX-A2000 (Ampere).
-
-| Model       | Profiling (hms) | Scoring (hms) | API cost ($) | Accuracy | IPW   |
-|-------------|-----------------|---------------|--------------|----------|-------|
-| llama3.2:1b | 01:25:23        | 01:08:30      | 1.12         | 0.397    | 0.011 |
-| gemma3:1b   | 02:06:57        | 01:04:22      | 1.21         | 0.518    | 0.012 |
-
-
 ## Analyze
+
+Example run commands.
 
 ```bash
 ipw analyze runs/profile_RTXA2000_llama3_2_1b_Intelligence\ Per\ Watt/
@@ -110,3 +137,18 @@ ipw plot runs/profile_RTXA2000_llama3_2_1b_Intelligence\ Per\ Watt/
 ## Backup
 
 Copy the `runs/` folder before deleting the repo.
+
+## Results
+
+Test runs on NVidia RTX-A2000 (Ampere GPU).
+
+| Model       | Profiling (hms) | Scoring (hms) | API cost ($) | Accuracy | IPW   |
+|-------------|-----------------|---------------|--------------|----------|-------|
+| llama3.2:1b | 01:25:23        | 01:08:30      | 1.12         | 0.397    | 0.011 |
+| gemma3:1b   | 02:06:57        | 01:04:22      | 1.21         | 0.518    | 0.012 |
+| gemma3:4b   | 09:01:42        | 01:11:36      | 1.22         | 0.695    | 0.023 |
+
+## Next steps
+
+- [ ] Increase timeout_seconds to try mitigate OpenAIClient read timeouts (N=[8, 13]).
+- [ ] Generate ipw results for reasoning models that can infer with [thinking disabled](https://ollama.com/blog/thinking): compare with thinking enabled and disabled.
